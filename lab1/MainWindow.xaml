@@ -1,0 +1,323 @@
+﻿<Window x:Class="lab1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab1" 
+        xmlns:xwpf="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl x:Name="optionsTab" Panel.ZIndex="1" Grid.Column="0">
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Building</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Bezier revolution"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="Step count"/>
+                                <TextBox x:Name="countTB" Text="20"/>
+                                <CheckBox x:Name="showModelCB" Content="Show model" Margin="10,10,10,10" IsChecked="True"></CheckBox>
+                                <CheckBox x:Name="showEdgesCB" Content="Show edges" Margin="10,10,10,10" IsChecked="False"></CheckBox>
+                                <CheckBox x:Name="showNormalsCB" Content="Show normals" Margin="10,10,10,10" IsChecked="False"></CheckBox>
+                                <CheckBox x:Name="showControlsCB" Content="Show controls" Margin="10,10,10,10" IsChecked="False"></CheckBox>
+                                <Button x:Name="buildButton" Content="Build" Margin="10,10,10,10" Click="buildButton_Click"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Step"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="un"/>
+                                <TextBox x:Name="duTB" Text="15"/>
+                                <Label Content="vn"/>
+                                <TextBox x:Name="dvTB" Text="15"/>
+                                <CheckBox x:Name="showModelPCB" Content="Show model" Margin="10,10,10,10" IsChecked="False"></CheckBox>
+                                <CheckBox x:Name="showEdgesPCB" Content="Show edges" Margin="10,10,10,10" IsChecked="True"></CheckBox>
+                                <CheckBox x:Name="showNormalsPCB" Content="Show normals" Margin="10,10,10,10" IsChecked="False"></CheckBox>
+                                <CheckBox x:Name="showControlsPCB" Content="Show controls" Margin="10,10,10,10" IsChecked="True"></CheckBox>
+                                <Button x:Name="buildPatchButton" Content="Build" Margin="10,10,10,10" Click="buildPatchButton_Click"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Transformations</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Offset"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="dx"/>
+                                <TextBox x:Name="dxTB" Text="0"/>
+                                <Label Content="dy"/>
+                                <TextBox x:Name="dyTB" Text="0"/>
+                                <Label Content="dz"/>
+                                <TextBox x:Name="dzTB" Text="0"/>
+                                <Button x:Name="offsetButton" Content="Offset" Margin="10,10,10,10" Click="offsetButton_Click"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Rotation"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="rx"/>
+                                <TextBox x:Name="rxTB" Text="0"/>
+                                <Label Content="ry"/>
+                                <TextBox x:Name="ryTB" Text="0"/>
+                                <Label Content="rz"/>
+                                <TextBox x:Name="rzTB" Text="0"/>
+                                <Label Content="axis"/>
+                                <ComboBox x:Name="axisCB" Margin="0,10,0,10">
+                                    <ComboBoxItem>
+                                        <TextBlock>x</TextBlock>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem IsSelected="True">
+                                        <TextBlock>y</TextBlock>
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        <TextBlock>z</TextBlock>
+                                    </ComboBoxItem>
+                                </ComboBox>
+                                <Label Content="angle"/>
+                                <TextBox x:Name="angleTB"/>
+                                <Button x:Name="rotateButton" Content="Rotate" Margin="10,10,10,10" Click="rotateButton_Click"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Control points</TextBlock>
+                </TabItem.Header>
+                <StackPanel>
+                    <GroupBox Padding="5">
+                        <StackPanel>
+                            <Label Content="x"/>
+                            <TextBox x:Name="cpxTB"/>
+                            <Label Content="y"/>
+                            <TextBox x:Name="cpyTB"/>
+                            <Label Content="z"/>
+                            <TextBox x:Name="cpzTB"/>
+                            <Button x:Name="movePoint" Content="Move point" Margin="10,10,10,10" Click="movePoint_Click"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Texture</TextBlock>
+                </TabItem.Header>
+                <StackPanel>
+                    <GroupBox Padding="5">
+                        <StackPanel>
+                            <Label Content="r"/>
+                            <TextBox x:Name="rTB" Text="20"/>
+                            <Label Content="count"/>
+                            <TextBox x:Name="tcountTB" Text="50"/>
+                            <Button x:Name="textureButton" Content="Apply texture" Margin="10,10,10,10" Click="textureButton_Click"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Padding="5">
+                        <GroupBox.Header>
+                            <Label Content="Offset"/>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <Label Content="dx"/>
+                            <TextBox x:Name="tdxTB" Text="0"/>
+                            <Label Content="dy"/>
+                            <TextBox x:Name="tdyTB" Text="0"/>
+                            <Button x:Name="toffsetButton" Content="Offset" Margin="10,10,10,10" Click="toffsetButton_Click"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Padding="5">
+                        <GroupBox.Header>
+                            <Label Content="Rotation"/>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <Label Content="angle"/>
+                            <TextBox x:Name="tangleTB"/>
+                            <Button x:Name="trotateButton" Content="Rotate" Margin="10,10,10,10" Click="trotateButton_Click"/>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Camera</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Camera rotation"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="X"/>
+                                <ScrollBar Name="hscroll" Orientation="Horizontal" Minimum="-180" Maximum="180" 
+                                           LargeChange="10" SmallChange="1" Value="0"/>
+                                <Label Content="Y"/>
+                                <ScrollBar Name="vscroll" Orientation="Horizontal" Minimum="-180" Maximum="180" 
+                                           LargeChange="10" SmallChange="1" Value="0" />
+                                <Label Content="Z"/>
+                                <ScrollBar Name="zscroll" Orientation="Horizontal" Minimum="-180" Maximum="180" 
+                                           LargeChange="10" SmallChange="1" Value="0" />
+                            </StackPanel>
+                        </GroupBox>
+                        <!--<GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Test"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Button x:Name="testButton" Content="Test projection" Margin="10,10,10,10" Click="testButton_Click"/>
+                            </StackPanel>
+                        </GroupBox>-->
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Lighting</TextBlock>
+                </TabItem.Header>
+                <StackPanel>
+                    <Label Content="Type"/>
+                    <ComboBox x:Name="lightCombo" Margin="10" SelectionChanged="lightCombo_SelectionChanged" >
+                        <ComboBoxItem>
+                            Directional
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Ambient
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Point
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Spot
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <Label Content="Color"/>
+                    <xwpf:ColorPicker Name="cp" Margin="10" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" ></xwpf:ColorPicker>
+                    <GroupBox Padding="5">
+                        <GroupBox.Header>
+                            <Label Content="Direction"/>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <Label Content="x"/>
+                            <TextBox x:Name="ldxTB" Text="-1" IsEnabled="False"/>
+                            <Label Content="y"/>
+                            <TextBox x:Name="ldyTB" Text="-1" IsEnabled="False"/>
+                            <Label Content="z"/>
+                            <TextBox x:Name="ldzTB" Text="-2" IsEnabled="False"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Padding="5">
+                        <GroupBox.Header>
+                            <Label Content="Position"/>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <Label Content="x"/>
+                            <TextBox x:Name="lpxTB" Text="4" IsEnabled="False"/>
+                            <Label Content="y"/>
+                            <TextBox x:Name="lpyTB" Text="3" IsEnabled="False"/>
+                            <Label Content="z"/>
+                            <TextBox x:Name="lpzTB" Text="7" IsEnabled="False"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <GroupBox Padding="5">
+                        <GroupBox.Header>
+                            <Label Content="Angles"/>
+                        </GroupBox.Header>
+                        <StackPanel>
+                            <Label Content="Inner cone angle"/>
+                            <TextBox x:Name="innerTB" Text="45" IsEnabled="False"/>
+                            <Label Content="Outer cone angle"/>
+                            <TextBox x:Name="outerTB" Text="90" IsEnabled="False"/>
+                        </StackPanel>
+                    </GroupBox>
+                    <CheckBox x:Name="materialCB" Content="Enable metal material" Margin="10" IsChecked="False"/>
+                    <Button x:Name="lightButton" Content="Apply" Margin="10,10,10,10" Click="lightButton_Click"/>
+                </StackPanel>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock Margin="3">Material</TextBlock>
+                </TabItem.Header>
+                <TabItem.Content>
+                    <StackPanel>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Diffuse material"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="Color"/>
+                                <xwpf:ColorPicker Name="diffuseCP" Margin="10" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" ></xwpf:ColorPicker>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Padding="5">
+                            <GroupBox.Header>
+                                <Label Content="Specular material"/>
+                            </GroupBox.Header>
+                            <StackPanel>
+                                <Label Content="Color"/>
+                                <xwpf:ColorPicker Name="specularCP" Margin="10" DisplayColorAndName="True" AvailableColorsSortingMode="HueSaturationBrightness" ></xwpf:ColorPicker>
+                                <Label Content="Specular power"/>
+                                <TextBox x:Name="powerTB" Text="45"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <Button x:Name="materialButton" Content="Apply" Margin="10,10,10,10" Click="materialButton_Click"/>
+                    </StackPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+
+        <Viewport3D Name="grid" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Loaded="Grid_Loaded" Panel.ZIndex="0">
+
+            <Viewport3D.Camera>
+                <OrthographicCamera x:Name="camera" Position="10,5,20" LookDirection="-10,-5,-20" Width="14">
+                    <OrthographicCamera.Transform>
+                        <Transform3DGroup>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D
+					                    Axis="0 1 0" 
+					                    Angle="{Binding ElementName=hscroll, Path=Value}" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D
+					                    Axis="1 0 0" 
+					                    Angle="{Binding ElementName=vscroll, Path=Value}" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                            <RotateTransform3D>
+                                <RotateTransform3D.Rotation>
+                                    <AxisAngleRotation3D
+					                    Axis="0 0 1" 
+					                    Angle="{Binding ElementName=zscroll, Path=Value}" />
+                                </RotateTransform3D.Rotation>
+                            </RotateTransform3D>
+                        </Transform3DGroup>
+                    </OrthographicCamera.Transform>
+                </OrthographicCamera>
+            </Viewport3D.Camera>
+        </Viewport3D>
+    </Grid>
+</Window>
